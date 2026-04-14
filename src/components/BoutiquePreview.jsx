@@ -63,19 +63,19 @@ const BoutiquePreview = ({ data }) => {
         <table className="items-table">
           <thead>
             <tr>
-              <th>DESCRIPTION</th>
-              <th className="text-center">QTY</th>
-              <th className="text-right">RATE</th>
-              <th className="text-right">AMOUNT</th>
+              <th className="col-desc">DESCRIPTION</th>
+              <th className="text-center col-qty">QTY</th>
+              <th className="text-right col-rate">RATE</th>
+              <th className="text-right col-amount">AMOUNT</th>
             </tr>
           </thead>
           <tbody>
             {data.items.map((item, index) => (
               <tr key={index}>
                 <td className="desc-cell">{item.description || 'Service Description'}</td>
-                <td className="text-center">{item.quantity}</td>
-                <td className="text-right">{formatCurrency(item.rate)}</td>
-                <td className="text-right">{formatCurrency(item.quantity * item.rate)}</td>
+                <td className="text-center cell-pad-h">{item.quantity}</td>
+                <td className="text-right cell-pad-h">{formatCurrency(item.rate)}</td>
+                <td className="text-right cell-pad-h">{formatCurrency(item.quantity * item.rate)}</td>
               </tr>
             ))}
           </tbody>
@@ -98,7 +98,7 @@ const BoutiquePreview = ({ data }) => {
               </div>
             )}
             <div className="total-row grand-total">
-              <span className="label">Total Amount</span>
+              <span className="label">Total</span>
               <span className="value">{formatCurrency(total)}</span>
             </div>
           </div>
@@ -106,7 +106,7 @@ const BoutiquePreview = ({ data }) => {
 
         <div className="invoice-footer">
           <div className="footer-line"></div>
-          <p className="copyright">© 2024 Asterix Studio. All Rights Reserved.</p>
+          <p className="copyright">© {new Date().getFullYear()} Asterix Studio. All Rights Reserved.</p>
         </div>
       </div>
 
@@ -116,6 +116,7 @@ const BoutiquePreview = ({ data }) => {
           display: flex;
           justify-content: center;
           padding: 20px 0;
+          overflow-x: auto;
         }
         .a4-page {
           width: 210mm;
@@ -128,19 +129,20 @@ const BoutiquePreview = ({ data }) => {
           font-family: 'Inter', sans-serif;
           display: flex;
           flex-direction: column;
+          position: relative;
         }
         @media (max-width: 1023px) {
           .preview-scale-wrapper {
-            transform: scale(0.45);
+            transform: scale(0.40);
             transform-origin: top center;
-            height: 150mm;
+            height: 140mm;
           }
         }
         @media (min-width: 1024px) and (max-width: 1400px) {
           .preview-scale-wrapper {
-            transform: scale(0.7);
+            transform: scale(0.65);
             transform-origin: top left;
-            height: 220mm;
+            height: 210mm;
           }
         }
 
@@ -148,63 +150,65 @@ const BoutiquePreview = ({ data }) => {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 40mm;
+          margin-bottom: 30mm;
+          position: relative;
         }
         .brand-box {
           display: flex;
           align-items: center;
           gap: 15px;
+          z-index: 2;
         }
         .invoice-logo {
-          height: 60px;
+          height: 50px;
           width: auto;
           object-fit: contain;
         }
         .brand-info .studio-name {
-          font-size: 1.5rem;
+          font-size: 1.25rem;
           font-weight: 800;
           letter-spacing: -0.025em;
           margin: 0;
           color: #0f172a;
         }
         .brand-info .studio-meta {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           color: #64748b;
           margin: 0;
           font-weight: 500;
         }
         .invoice-title {
-          font-size: 3rem;
+          font-size: 4rem;
           font-weight: 900;
-          letter-spacing: -0.05em;
-          color: #f1f5f9;
+          letter-spacing: -0.02em;
+          color: #f8fafc;
           margin: 0;
           position: absolute;
-          right: 20mm;
-          top: 15mm;
+          right: 0;
+          top: -10mm;
           z-index: 0;
           line-height: 1;
         }
         .invoice-meta {
           text-align: right;
           position: relative;
-          z-index: 1;
-          margin-top: 5mm;
+          z-index: 2;
         }
         .meta-grid {
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 12px;
         }
         .meta-item .label {
-          font-size: 0.65rem;
-          font-weight: 700;
+          font-size: 0.6rem;
+          font-weight: 800;
+          letter-spacing: 0.1em;
           color: #94a3b8;
           display: block;
-          margin-bottom: 2px;
+          margin-bottom: 4px;
         }
         .meta-item .value {
-          font-size: 1rem;
+          font-size: 1.1rem;
           font-weight: 700;
           color: #1e293b;
         }
@@ -226,67 +230,93 @@ const BoutiquePreview = ({ data }) => {
         .client-name, .studio-name-small {
           font-size: 1.1rem;
           font-weight: 700;
-          margin: 0 0 4px 0;
+          margin: 0 0 6px 0;
+          color: #0f172a;
         }
         .client-email, .client-address, .studio-contact, .studio-address {
           font-size: 0.85rem;
           color: #64748b;
-          margin: 0;
-          line-height: 1.4;
+          margin: 0 0 4px 0;
+          line-height: 1.5;
         }
 
         .items-table {
           width: 100%;
           border-collapse: collapse;
           margin-bottom: 20mm;
+          table-layout: fixed;
         }
+        .col-desc { width: 45%; }
+        .col-qty { width: 15%; }
+        .col-rate { width: 20%; }
+        .col-amount { width: 20%; }
+
         .items-table th {
           font-size: 0.65rem;
           font-weight: 800;
+          letter-spacing: 0.05em;
           color: #94a3b8;
-          padding: 12px 0;
-          border-bottom: 2px solid #f1f5f9;
+          padding: 12px 10px;
+          border-bottom: 1px solid #e2e8f0;
           text-align: left;
         }
+        .items-table th.text-center { text-align: center; }
+        .items-table th.text-right { text-align: right; }
+
         .items-table td {
-          padding: 20px 0;
+          padding: 16px 10px;
           font-size: 0.9rem;
-          border-bottom: 1px solid #f8fafc;
+          border-bottom: 1px solid #f1f5f9;
+          vertical-align: top;
         }
         .desc-cell {
           font-weight: 600;
-          color: #334155;
+          color: #1e293b;
+          line-height: 1.5;
         }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
 
         .summary-section {
-          display: grid;
-          grid-template-columns: 1fr 200px;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
           gap: 20mm;
           margin-top: auto;
           padding-top: 10mm;
         }
+        .notes-box {
+          flex: 1;
+        }
         .notes-text {
-          font-size: 0.8rem;
+          font-size: 0.85rem;
           color: #64748b;
           line-height: 1.6;
+          white-space: pre-wrap;
+        }
+        .totals-box {
+          width: 300px;
+          background: #f8fafc;
+          padding: 20px;
+          border-radius: 12px;
         }
         .total-row {
           display: flex;
           justify-content: space-between;
+          align-items: center;
           padding: 8px 0;
-          font-size: 0.9rem;
+          font-size: 0.95rem;
         }
         .total-row .label { color: #64748b; font-weight: 500; }
         .total-row .value { font-weight: 700; color: #1e293b; }
+        
         .grand-total {
           margin-top: 12px;
-          padding-top: 12px;
-          border-top: 2px solid #f1f5f9;
+          padding-top: 16px;
+          border-top: 2px solid #e2e8f0;
         }
-        .grand-total .label { font-weight: 800; color: #0f172a; font-size: 1rem; }
-        .grand-total .value { font-weight: 800; color: #2563eb; font-size: 1.25rem; }
+        .grand-total .label { font-weight: 800; color: #0f172a; font-size: 1.1rem; }
+        .grand-total .value { font-weight: 800; color: #2563eb; font-size: 1.3rem; }
 
         .invoice-footer {
           margin-top: 20mm;
@@ -294,12 +324,12 @@ const BoutiquePreview = ({ data }) => {
         }
         .footer-line {
           height: 1px;
-          background: #f1f5f9;
-          margin-bottom: 8px;
+          background: #e2e8f0;
+          margin-bottom: 12px;
         }
         .copyright {
-          font-size: 0.7rem;
-          color: #cbd5e1;
+          font-size: 0.75rem;
+          color: #94a3b8;
           font-weight: 500;
         }
       `}</style>
