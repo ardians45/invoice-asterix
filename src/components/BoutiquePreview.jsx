@@ -23,6 +23,7 @@ const BoutiquePreview = ({ data }) => {
       <div id="invoice-capture" className="a4-page">
         {/* Header Ribbon */}
         <div className="invoice-header">
+          <h1 className="invoice-title">INVOICE</h1>
           <div className="brand-box">
             <img src={logo} alt="Asterix Logo" className="invoice-logo" />
             <div className="brand-info">
@@ -31,7 +32,6 @@ const BoutiquePreview = ({ data }) => {
             </div>
           </div>
           <div className="invoice-meta">
-            <h1 className="invoice-title">INVOICE</h1>
             <div className="meta-grid">
               <div className="meta-item">
                 <span className="label">NUMBER</span>
@@ -178,16 +178,18 @@ const BoutiquePreview = ({ data }) => {
           font-weight: 500;
         }
         .invoice-title {
-          font-size: 4rem;
+          font-size: 5rem;
           font-weight: 900;
           letter-spacing: -0.02em;
-          color: #f8fafc;
+          color: #f1f5f9;
           margin: 0;
           position: absolute;
           right: 0;
-          top: -10mm;
+          top: -15mm;
           z-index: 0;
           line-height: 1;
+          opacity: 0.5;
+          pointer-events: none;
         }
         .invoice-meta {
           text-align: right;

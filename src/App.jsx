@@ -4,6 +4,7 @@ import { Edit3, Eye, Download, Plus, Trash2, Smartphone, Monitor } from 'lucide-
 import PremiumForm from './components/PremiumForm';
 import BoutiquePreview from './components/BoutiquePreview';
 import { exportToPDF } from './utils/pdfEngine';
+import { generateInvoiceNumber, getStoredCounter, setStoredCounter } from './utils/invoiceNumber';
 import './App.css';
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   
   const [invoiceData, setInvoiceData] = useState({
-    invoiceNumber: 'INV-2024-001',
+    invoiceNumber: generateInvoiceNumber(getStoredCounter()),
     issueDate: new Date().toISOString().split('T')[0],
     dueDate: '',
     clientName: '',
@@ -33,7 +34,18 @@ const App = () => {
   }, []);
 
   const handleExport = () => {
+    // Export the current invoice
     exportToPDF('invoice-capture', `Invoice_${invoiceData.invoiceNumber}_${invoiceData.clientName || 'Client'}`);
+    
+    // Prepare for the next invoice
+    const nextCounter = getStoredCounter() + 1;
+    setStoredCounter(nextCounter);
+    
+    // Update the UI with the new number
+    setInvoiceData(prev => ({
+      ...prev,
+      invoiceNumber: generateInvoiceNumber(nextCounter)
+    }));
   };
 
   return (
