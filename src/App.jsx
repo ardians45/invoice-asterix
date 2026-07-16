@@ -50,6 +50,13 @@ const App = () => {
 
   return (
     <div className="app-container">
+      <div className="top-banner">
+        <span>Akses File & Template: </span>
+        <a href="https://drive.google.com/drive/folders/1SYkoed2KDadagX8mWRLxvAHKr2AIIbep" target="_blank" rel="noreferrer">
+          Google Drive Folder
+        </a>
+      </div>
+
       {/* Header / Nav */}
       <header className="app-header glass">
         <div className="header-content">

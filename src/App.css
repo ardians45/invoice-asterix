@@ -1,3 +1,31 @@
+.top-banner {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+}
+
+.top-banner a {
+  color: white;
+  text-decoration: underline;
+  font-weight: 700;
+  transition: opacity 0.2s ease;
+}
+
+.top-banner a:hover {
+  opacity: 0.9;
+}
+
 .app-container {
   min-height: 100vh;
   display: flex;
